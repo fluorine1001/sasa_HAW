@@ -32,19 +32,19 @@ body {
     background-color: #e0e0e0;
 }
 
-/* 🔥 player 전체 컨테이너 (Artwork + Title) */
+/* 🔥 player 전체 영역 (Artwork + Title + Iframe) */
 #player {
     position: fixed;
     top: 50%;
     right: 100px;
     transform: translateY(-50%);
-    z-index: 9999;
+    z-index: 9998;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* 🔥 아트워크 박스만 박스 그림자 적용 */
+/* 🔥 Artwork 박스 */
 #artwork-container {
     width: 200px;
     height: 200px;
@@ -73,7 +73,7 @@ body {
     color: #333;
 }
 
-/* 🔥 숨겨진 임베드 플레이어 */
+/* 🔥 매우 작은 임베드 */
 #player iframe {
     position: absolute;
     top: 0;
@@ -81,4 +81,25 @@ body {
     width: 1px;
     height: 1px;
     opacity: 0;
+}
+
+/* 🔥 닫기 버튼 스타일 */
+#close-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    background: red;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 6px;
+    display: none; /* 기본은 숨김 */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 9999;
+    text-align: center;
+    line-height: 30px;
 }
