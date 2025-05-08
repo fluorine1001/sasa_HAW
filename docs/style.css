@@ -25,18 +25,11 @@ body {
     text-align: center;
     font-size: 24px;
     border-radius: 12px;
-    transition: transform 0.2s ease, border 0.3s, background-color 0.3s, box-shadow 0.3s;
+    transition: transform 0.2s ease;
 }
 
 .textbox:hover {
     background-color: #e0e0e0;
-}
-
-/* 현재 재생 중인 텍스트박스 강조 */
-.textbox.active {
-    border: 3px solid #ff5500;
-    background-color: #fff8f0;
-    box-shadow: 0 6px 24px rgba(255, 85, 0, 0.5);
 }
 
 /* 전체 player fade 영역 */
@@ -110,35 +103,13 @@ body {
     cursor: pointer;
     color: #333;
     transition: transform 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    height: 40px;
-    width: 40px;
-    padding: 0;
 }
 
 #controls button:hover {
     transform: scale(1.2);
 }
 
-/* 루프 버튼 */
-#loop-button {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #333;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-}
-
-#loop-button.active {
-    opacity: 1.0;
-}
-
-/* 숨겨진 iframe */
+/* iframe 숨기기 */
 #player iframe {
     position: absolute;
     top: 0;
@@ -167,40 +138,4 @@ body {
     z-index: 9999;
     text-align: center;
     line-height: 30px;
-}
-
-/* 루프 간선 */
-#loop-line {
-    position: fixed;
-    left: 250px;
-    top: 100px;
-    width: 2px;
-    background: #333;
-    display: none;
-    z-index: 9997;
-}
-
-/* 루프 점 */
-.loop-dot {
-    position: absolute;
-    left: -4px;
-    width: 10px;
-    height: 10px;
-    background: #333;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-/* 루프 중간 박스 */
-.loop-box {
-    position: absolute;
-    left: -7px;
-    width: 14px;
-    height: 14px;
-    background: #333;
-    cursor: pointer;
-    border: 2px solid #333;
-}
-.loop-box.inactive {
-    background: transparent;
 }
