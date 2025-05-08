@@ -39,7 +39,7 @@ async function getArtwork(trackUrl) {
     try {
         const response = await fetch(oembedUrl);
         const data = await response.json();
-        return data.thumbnail_url; // 아트워크 URL 반환
+        return data.thumbnail_url;
     } catch (error) {
         console.error("Artwork 로딩 실패:", error);
         return "https://via.placeholder.com/200?text=Error";
@@ -91,7 +91,7 @@ function scrollPage() {
 requestAnimationFrame(scrollPage);
 
 // ===========================
-// 텍스트 박스 클릭 시 아트워크 + 설명 + 임베드 표시
+// 텍스트 박스 클릭 시 아트워크 + 제목 + 임베드 표시
 // ===========================
 document.querySelectorAll('.textbox').forEach((box, index) => {
     box.addEventListener('click', async function() {
@@ -104,15 +104,29 @@ document.querySelectorAll('.textbox').forEach((box, index) => {
 
             const playerContainer = document.getElementById('player');
             playerContainer.innerHTML = `
-                <img src="${artworkUrl}" alt="Artwork">
+                <div id="artwork-container">
+                    <img src="${artworkUrl}" alt="Artwork">
+                </div>
                 <div class="track-title">${title}</div>
                 <iframe scrolling="no" frameborder="no" allow="autoplay"
                 src="${embedUrl}"></iframe>
             `;
+
+            // 🔥 아트워크가 뜨면 X 버튼 보이게
+            document.getElementById('close-button').style.display = 'flex';
         } else {
             console.error('links 배열에 해당 인덱스가 없습니다.');
         }
     });
+});
+
+// ===========================
+// 닫기 버튼 동작: 아트워크, 텍스트, iframe 모두 삭제
+// ===========================
+document.getElementById('close-button').addEventListener('click', function() {
+    const playerContainer = document.getElementById('player');
+    playerContainer.innerHTML = '';
+    this.style.display = 'none'; // X 버튼 숨기기
 });
 
 // ===========================
