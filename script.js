@@ -1,19 +1,19 @@
-let targetSpeed = 0; // 목표 속도
-let currentSpeed = 0; // 현재 속도
-const maxSpeed = 5; // 최고 속도 (픽셀/frame)
-const acceleration = 0.2; // 가속도 (픽셀/frame²)
-const margin = 100; // 추가 여유 (위/아래 여백)
+let targetSpeed = 0;
+let currentSpeed = 0;
+const maxSpeed = 5;
+const acceleration = 0.2;
+const margin = 100; // 컨테이너 패딩과 동일한 값
 
 document.addEventListener('mousemove', function(e) {
     let y = e.clientY;
     let height = window.innerHeight;
 
     if (y < height * 0.25) {
-        targetSpeed = -maxSpeed; // 위로 스크롤
+        targetSpeed = -maxSpeed;
     } else if (y > height * 0.75) {
-        targetSpeed = maxSpeed; // 아래로 스크롤
+        targetSpeed = maxSpeed;
     } else {
-        targetSpeed = 0; // 가운데에서는 멈춤
+        targetSpeed = 0;
     }
 });
 
@@ -28,11 +28,9 @@ function scrollPage() {
         let newScroll = window.scrollY + currentSpeed;
         let maxScroll = document.documentElement.scrollHeight - window.innerHeight;
 
-        // 위쪽 한계 처리
         if (newScroll < -margin) {
             newScroll = -margin;
         }
-        // 아래쪽 한계 처리
         if (newScroll > maxScroll + margin) {
             newScroll = maxScroll + margin;
         }
@@ -51,4 +49,12 @@ document.querySelectorAll('.textbox').forEach(box => {
         let audio = new Audio(audioFile);
         audio.play();
     });
+});
+
+// 🔥 최초 로딩 시 스크롤 위치 조정
+window.addEventListener('load', () => {
+    const boxHeight = 300 + 40 * 2 + 100; // (텍스트박스 높이 + 패딩*2 + gap)
+    const initialScroll = boxHeight * 1.5; 
+    // 1.5개 정도 스크롤 => 2~5번 상자 중심으로 보이게
+    window.scrollTo(0, initialScroll);
 });
