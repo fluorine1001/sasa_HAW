@@ -1,6 +1,6 @@
 let targetSpeed = 0;
 let currentSpeed = 0;
-const maxSpeed = 5;
+const maxSpeed = 10;
 const acceleration = 0.2;
 const margin = 100; // 컨테이너 패딩과 동일한 값
 
