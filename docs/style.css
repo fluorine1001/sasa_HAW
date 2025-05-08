@@ -99,11 +99,19 @@ body {
 #controls button {
     background: none;
     border: none;
-    font-size: 24px;
+    font-size: 28px;
     cursor: pointer;
     color: #333;
     transition: transform 0.2s;
+    display: flex;                  /* 아이콘 수직 중앙 정렬 */
+    align-items: center;
+    justify-content: center;
+    line-height: 1;                /* 수직 정렬 안정화 */
+    height: 40px;                  /* 균일한 높이 */
+    width: 40px;                   /* (선택) 아이콘 정사각형 정렬 */
+    padding: 0;
 }
+
 
 #controls button:hover {
     transform: scale(1.2);
