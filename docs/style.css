@@ -8,17 +8,17 @@ body {
 
 #container {
     padding-top: 100px;
-    padding-bottom: 200px;
-    padding-left: 100px;
+    padding-bottom: 100px;
+    padding-left: 300px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 100px;
+    gap: 70px;
 }
 
 .textbox {
     width: 300px;
-    padding: 40px;
+    padding: 30px;
     background-color: white;
     box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     cursor: pointer;
@@ -35,7 +35,7 @@ body {
 #player {
     position: fixed;
     top: 50%;
-    right: 100px;
+    right: 300px;
     transform: translateY(-50%);
     z-index: 9998;
     display: flex;
@@ -44,8 +44,8 @@ body {
 }
 
 #artwork-container {
-    width: 200px;
-    height: 200px;
+    width: 400px;
+    height: 400px;
     background: white;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
@@ -63,9 +63,9 @@ body {
 }
 
 .track-title {
-    margin-top: 80px;
+    margin-top: 40px;
     text-align: center;
-    font-size: 16px;
+    font-size: 25px;
     font-weight: bold;
     color: #333;
 }
@@ -74,7 +74,7 @@ body {
 .track-time {
     margin-top: 10px;
     text-align: center;
-    font-size: 14px;
+    font-size: 18px;
     color: #666;
 }
 
