@@ -1,15 +1,9 @@
-// ===========================
-// 스크롤 관련 변수
-// ===========================
 let targetSpeed = 0;
 let currentSpeed = 0;
 const maxSpeed = 5;
 const acceleration = 0.2;
 const margin = 100;
 
-// ===========================
-// SoundCloud 트랙 링크 배열
-// ===========================
 const links = [
     "https://soundcloud.com/41354rnjoawm/spark",
     "https://soundcloud.com/kk9gba3rypuc/card-clash",
@@ -19,9 +13,6 @@ const links = [
     "https://soundcloud.com/sasaundcloud/8d0f3d77-c575-4835-b620-7c4611f53a09"
 ];
 
-// ===========================
-// 각 트랙에 대응하는 설명 텍스트 배열
-// ===========================
 const titles = [
     "트랙 1 제목",
     "트랙 2 제목",
@@ -31,9 +22,10 @@ const titles = [
     "트랙 6 제목"
 ];
 
-// ===========================
-// SoundCloud oEmbed API를 통한 아트워크 가져오기
-// ===========================
+// 현재 재생 중인 widget
+let widget = null;
+let timeUpdater = null;
+
 async function getArtwork(trackUrl) {
     const oembedUrl = `https://soundcloud.com/oembed?format=json&url=${encodeURIComponent(trackUrl)}`;
     try {
@@ -46,9 +38,6 @@ async function getArtwork(trackUrl) {
     }
 }
 
-// ===========================
-// 마우스 움직임에 따른 targetSpeed 설정
-// ===========================
 document.addEventListener('mousemove', function(e) {
     let y = e.clientY;
     let height = window.innerHeight;
@@ -62,9 +51,6 @@ document.addEventListener('mousemove', function(e) {
     }
 });
 
-// ===========================
-// 부드러운 등가속 스크롤
-// ===========================
 function scrollPage() {
     if (currentSpeed < targetSpeed) {
         currentSpeed = Math.min(currentSpeed + acceleration, targetSpeed);
@@ -90,9 +76,7 @@ function scrollPage() {
 }
 requestAnimationFrame(scrollPage);
 
-// ===========================
-// 텍스트 박스 클릭 시 아트워크 + 제목 + 임베드 표시
-// ===========================
+// 텍스트 박스 클릭
 document.querySelectorAll('.textbox').forEach((box, index) => {
     box.addEventListener('click', async function() {
         if (index < links.length) {
@@ -108,30 +92,47 @@ document.querySelectorAll('.textbox').forEach((box, index) => {
                     <img src="${artworkUrl}" alt="Artwork">
                 </div>
                 <div class="track-title">${title}</div>
-                <iframe scrolling="no" frameborder="no" allow="autoplay"
+                <div class="track-time">(0:00 / 0:00)</div>
+                <iframe id="sc-widget" scrolling="no" frameborder="no" allow="autoplay"
                 src="${embedUrl}"></iframe>
             `;
 
-            // 🔥 아트워크가 뜨면 X 버튼 보이게
             document.getElementById('close-button').style.display = 'flex';
+
+            const iframeElement = document.getElementById('sc-widget');
+            widget = SC.Widget(iframeElement);
+
+            // 시간 업데이트 시작
+            if (timeUpdater) clearInterval(timeUpdater);
+            timeUpdater = setInterval(async () => {
+                widget.getPosition(pos => {
+                    widget.getDuration(dur => {
+                        document.querySelector('.track-time').innerText = `(${formatTime(pos)} / ${formatTime(dur)})`;
+                    });
+                });
+            }, 1000);
         } else {
             console.error('links 배열에 해당 인덱스가 없습니다.');
         }
     });
 });
 
-// ===========================
-// 닫기 버튼 동작: 아트워크, 텍스트, iframe 모두 삭제
-// ===========================
+// 닫기 버튼
 document.getElementById('close-button').addEventListener('click', function() {
     const playerContainer = document.getElementById('player');
     playerContainer.innerHTML = '';
-    this.style.display = 'none'; // X 버튼 숨기기
+    this.style.display = 'none';
+    if (timeUpdater) clearInterval(timeUpdater);
 });
 
-// ===========================
-// 사이트 로드 시 초기 스크롤 위치 조정
-// ===========================
+// 시간 포맷팅
+function formatTime(ms) {
+    const totalSeconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
+
 window.addEventListener('load', () => {
     const boxHeight = 300 + 40 * 2 + 100;
     const initialScroll = boxHeight * 1.5;
