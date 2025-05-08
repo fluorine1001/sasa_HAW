@@ -13,7 +13,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 70px;
+    gap: 80px;
 }
 
 .textbox {
