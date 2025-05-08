@@ -14,12 +14,12 @@ const links = [
 ];
 
 const titles = [
-    "Spark by 홍준표",
-    "Card Clash by 이지민",
-    "음악 자료 by 이서우",
-    "Feel Good by 조용준",
-    "밤과 방 안의 우리들 by 이정윤",
-    "자정 by 고은규"
+    "Spark | 홍준표",
+    "Card Clash | 이지민",
+    "음악 자료 | 이서우",
+    "Feel Good | 조용준",
+    "밤과 방 안의 우리들 | 이정윤",
+    "자정 | 고은규"
 ];
 
 let widget = null;
