@@ -32,7 +32,7 @@ body {
     background-color: #e0e0e0;
 }
 
-/* 아트워크+텍스트+시간+iframe 전체 컨테이너 */
+/* 전체 player fade 영역 */
 #player {
     position: fixed;
     top: 50%;
@@ -50,7 +50,7 @@ body {
     opacity: 1;
 }
 
-/* 아트워크 박스 */
+/* 아트워크 */
 #artwork-container {
     width: 400px;
     height: 400px;
@@ -87,7 +87,29 @@ body {
     color: #666;
 }
 
-/* 숨겨진 iframe */
+/* 제어 버튼 영역 */
+#controls {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+#controls button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+    transition: transform 0.2s;
+}
+
+#controls button:hover {
+    transform: scale(1.2);
+}
+
+/* iframe 숨기기 */
 #player iframe {
     position: absolute;
     top: 0;
