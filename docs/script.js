@@ -8,20 +8,16 @@ const acceleration = 0.2;
 const margin = 100;
 
 // ===========================
-// information.txt 파일 읽기
+// SoundCloud 링크 배열
 // ===========================
-let lines = [];
-
-fetch('information.txt')
-    .then(response => response.text())
-    .then(text => {
-        lines = text.split('\n')
-                    .map(line => line.trim())
-                    .filter(line => line.length > 0);
-    })
-    .catch(error => {
-        console.error('information 파일 로딩 실패:', error);
-    });
+const links = [
+    "https://soundcloud.com/username/track1",
+    "https://soundcloud.com/username/track2",
+    "https://soundcloud.com/username/track3",
+    "https://soundcloud.com/username/track4",
+    "https://soundcloud.com/username/track5",
+    "https://soundcloud.com/username/track6"
+];
 
 // ===========================
 // 마우스 움직임에 따른 targetSpeed 설정
@@ -31,11 +27,11 @@ document.addEventListener('mousemove', function(e) {
     let height = window.innerHeight;
 
     if (y < height * 0.25) {
-        targetSpeed = -maxSpeed;
+        targetSpeed = -maxSpeed; // 위쪽으로 스크롤
     } else if (y > height * 0.75) {
-        targetSpeed = maxSpeed;
+        targetSpeed = maxSpeed; // 아래쪽으로 스크롤
     } else {
-        targetSpeed = 0;
+        targetSpeed = 0; // 가운데 영역에서는 멈춤
     }
 });
 
@@ -68,17 +64,21 @@ function scrollPage() {
 requestAnimationFrame(scrollPage);
 
 // ===========================
-// 텍스트 박스 클릭 시 mp3 파일 재생
+// 텍스트 박스 클릭 시 SoundCloud 트랙 재생
 // ===========================
 document.querySelectorAll('.textbox').forEach((box, index) => {
     box.addEventListener('click', function() {
-        if (index < lines.length) {
-            let filename = lines[index];
-            let safeFilename = encodeURIComponent(filename); // 🔥 URL 인코딩 적용
-            let audio = new Audio(safeFilename + '.mp3');
-            audio.play();
+        if (index < links.length) {
+            const trackUrl = links[index];
+            const embedUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(trackUrl)}&color=%23ff5500&inverse=false&auto_play=true&show_user=true`;
+
+            const playerContainer = document.getElementById('player');
+            playerContainer.innerHTML = `
+                <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+                src="${embedUrl}"></iframe>
+            `;
         } else {
-            console.error('lines 배열에 해당 인덱스가 없습니다.');
+            console.error('links 배열에 해당 인덱스가 없습니다.');
         }
     });
 });
@@ -87,7 +87,7 @@ document.querySelectorAll('.textbox').forEach((box, index) => {
 // 사이트 로드 시 초기 스크롤 위치 조정
 // ===========================
 window.addEventListener('load', () => {
-    const boxHeight = 300 + 40 * 2 + 100; // 텍스트 박스 높이 + padding + gap
-    const initialScroll = boxHeight * 1.5; // 2번 ~ 5번 상자가 보이도록 스크롤
+    const boxHeight = 300 + 40 * 2 + 100; // 박스 높이 + 패딩 + 간격
+    const initialScroll = boxHeight * 1.5; // 2~5번 박스가 보이도록
     window.scrollTo(0, initialScroll);
 });
