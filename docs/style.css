@@ -32,14 +32,33 @@ body {
     background-color: #e0e0e0;
 }
 
-/* 🔥 고정된 SoundCloud 플레이어 스타일 */
+/* 🔥 고정된 아트워크 + 임베드 위치 */
 #player {
     position: fixed;
-    top: 50%;            /* 세로 중앙 */
-    right: 200px;        /* 오른쪽에서 100px */
-    width: 400px;
-    height: 400px;
-    transform: translateY(-50%); /* 중앙 정렬 (top 50%에서 자기 키의 절반만큼 위로 이동) */
+    top: 50%;
+    right: 100px;
+    width: 200px;
+    height: 200px;
+    transform: translateY(-50%);
     z-index: 9999;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* artwork 이미지 스타일 */
+#player img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* 매우 작은 iframe 스타일 */
+#player iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px; /* 아주 작게 */
+    height: 1px; /* 아주 작게 */
+    opacity: 0; /* 사실상 보이지 않음 */
 }
