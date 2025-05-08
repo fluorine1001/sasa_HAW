@@ -5,12 +5,12 @@ const acceleration = 0.2;
 const margin = 100;
 
 const links = [
-    "https://soundcloud.com/41354rnjoawm/spark",
-    "https://soundcloud.com/kk9gba3rypuc/card-clash",
-    "https://soundcloud.com/vvkthll1ulvk/agp97mvrniud",
-    "https://soundcloud.com/02uivhrz6pdr/feel-good",
-    "https://soundcloud.com/bx0ucnqbgn0s/2eetpwwqo2ca",
-    "https://soundcloud.com/sasaundcloud/8d0f3d77-c575-4835-b620-7c4611f53a09"
+    "https://soundcloud.com/username/track1",
+    "https://soundcloud.com/username/track2",
+    "https://soundcloud.com/username/track3",
+    "https://soundcloud.com/username/track4",
+    "https://soundcloud.com/username/track5",
+    "https://soundcloud.com/username/track6"
 ];
 
 const titles = [
@@ -25,7 +25,6 @@ const titles = [
 let widget = null;
 let timeUpdater = null;
 
-// 아트워크 URL 가져오기
 async function getArtwork(trackUrl) {
     const oembedUrl = `https://soundcloud.com/oembed?format=json&url=${encodeURIComponent(trackUrl)}`;
     try {
@@ -34,11 +33,10 @@ async function getArtwork(trackUrl) {
         return data.thumbnail_url;
     } catch (error) {
         console.error("Artwork 로딩 실패:", error);
-        return "https://via.placeholder.com/200?text=Error";
+        return "https://via.placeholder.com/400?text=Error";
     }
 }
 
-// 시간 포맷 (ms → m:ss)
 function formatTime(ms) {
     const totalSeconds = Math.floor(ms / 1000);
     const minutes = Math.floor(totalSeconds / 60);
@@ -46,7 +44,6 @@ function formatTime(ms) {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
 }
 
-// 마우스 위치에 따른 스크롤 속도 설정
 document.addEventListener('mousemove', function(e) {
     let y = e.clientY;
     let height = window.innerHeight;
@@ -60,7 +57,6 @@ document.addEventListener('mousemove', function(e) {
     }
 });
 
-// 부드러운 등가속 스크롤
 function scrollPage() {
     if (currentSpeed < targetSpeed) {
         currentSpeed = Math.min(currentSpeed + acceleration, targetSpeed);
@@ -71,7 +67,6 @@ function scrollPage() {
     if (currentSpeed !== 0) {
         let newScroll = window.scrollY + currentSpeed;
         let maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-
         newScroll = Math.max(-margin, Math.min(newScroll, maxScroll + margin));
         window.scrollTo(0, newScroll);
     }
@@ -80,7 +75,6 @@ function scrollPage() {
 }
 requestAnimationFrame(scrollPage);
 
-// 트랙 클릭 → 아트워크 + 텍스트 + 시간 + 숨겨진 플레이어 생성
 document.querySelectorAll('.textbox').forEach((box, index) => {
     box.addEventListener('click', async function() {
         if (index < links.length) {
@@ -96,10 +90,14 @@ document.querySelectorAll('.textbox').forEach((box, index) => {
                 </div>
                 <div class="track-title">${title}</div>
                 <div class="track-time">(0:00 / 0:00)</div>
+                <div id="controls">
+                    <button id="prev">&lt;</button>
+                    <button id="play-pause">⏸</button>
+                    <button id="next">&gt;</button>
+                </div>
                 <iframe id="sc-widget" scrolling="no" frameborder="no" allow="autoplay" src="${embedUrl}"></iframe>
             `;
 
-            // fade-in
             setTimeout(() => playerContainer.classList.add('active'), 10);
             document.getElementById('close-button').style.display = 'flex';
 
@@ -114,11 +112,45 @@ document.querySelectorAll('.textbox').forEach((box, index) => {
                     });
                 });
             }, 1000);
+
+            setupControls();
         }
     });
 });
 
-// 닫기 버튼 → fade-out + 제거
+function setupControls() {
+    const prevBtn = document.getElementById('prev');
+    const playPauseBtn = document.getElementById('play-pause');
+    const nextBtn = document.getElementById('next');
+
+    let isPlaying = true;
+
+    prevBtn.addEventListener('click', () => {
+        widget.getPosition(pos => {
+            widget.seekTo(Math.max(pos - 5000, 0));
+        });
+    });
+
+    nextBtn.addEventListener('click', () => {
+        widget.getPosition(pos => {
+            widget.getDuration(dur => {
+                widget.seekTo(Math.min(pos + 5000, dur));
+            });
+        });
+    });
+
+    playPauseBtn.addEventListener('click', () => {
+        if (isPlaying) {
+            widget.pause();
+            playPauseBtn.innerText = "▶";
+        } else {
+            widget.play();
+            playPauseBtn.innerText = "⏸";
+        }
+        isPlaying = !isPlaying;
+    });
+}
+
 document.getElementById('close-button').addEventListener('click', function() {
     const playerContainer = document.getElementById('player');
     playerContainer.classList.remove('active');
@@ -126,12 +158,12 @@ document.getElementById('close-button').addEventListener('click', function() {
         playerContainer.innerHTML = '';
         this.style.display = 'none';
     }, 500);
+
     if (timeUpdater) clearInterval(timeUpdater);
 });
 
-// 사이트 진입 시 초기 스크롤
 window.addEventListener('load', () => {
-    const boxHeight = 300 + 40 * 2 + 100;
+    const boxHeight = 300 + 40 * 2 + 70;
     const initialScroll = boxHeight * 1.5;
     window.scrollTo(0, initialScroll);
 });
