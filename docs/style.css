@@ -35,10 +35,11 @@ body {
 /* 🔥 고정된 SoundCloud 플레이어 스타일 */
 #player {
     position: fixed;
-    top: 100px;
-    right: 100px;
-    width: 200px;
-    height: 200px;
+    top: 50%;            /* 세로 중앙 */
+    right: 200px;        /* 오른쪽에서 100px */
+    width: 400px;
+    height: 400px;
+    transform: translateY(-50%); /* 중앙 정렬 (top 50%에서 자기 키의 절반만큼 위로 이동) */
     z-index: 9999;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
