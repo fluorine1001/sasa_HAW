@@ -32,33 +32,44 @@ body {
     background-color: #e0e0e0;
 }
 
-/* 🔥 고정된 아트워크 + 임베드 위치 */
+/* 🔥 고정된 아트워크 + 텍스트 + 임베드 위치 */
 #player {
     position: fixed;
     top: 50%;
     right: 100px;
     width: 200px;
-    height: 200px;
+    height: 280px; /* artwork 200px + 공백 80px */
     transform: translateY(-50%);
     z-index: 9999;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    background: white;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* artwork 이미지 스타일 */
 #player img {
-    width: 100%;
-    height: 100%;
+    width: 200px;
+    height: 200px;
     object-fit: cover;
     border-radius: 12px;
 }
 
-/* 매우 작은 iframe 스타일 */
+#player .track-title {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* 매우 작은 iframe */
 #player iframe {
     position: absolute;
     top: 0;
     left: 0;
-    width: 1px; /* 아주 작게 */
-    height: 1px; /* 아주 작게 */
-    opacity: 0; /* 사실상 보이지 않음 */
+    width: 1px;
+    height: 1px;
+    opacity: 0;
 }
