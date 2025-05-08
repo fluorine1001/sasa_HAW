@@ -11,12 +11,12 @@ const margin = 100;
 // SoundCloud 링크 배열
 // ===========================
 const links = [
-    "https://soundcloud.com/username/track1",
-    "https://soundcloud.com/username/track2",
-    "https://soundcloud.com/username/track3",
-    "https://soundcloud.com/username/track4",
-    "https://soundcloud.com/username/track5",
-    "https://soundcloud.com/username/track6"
+    "https://soundcloud.com/41354rnjoawm/spark",
+    "https://soundcloud.com/kk9gba3rypuc/card-clash",
+    "https://soundcloud.com/vvkthll1ulvk/agp97mvrniud",
+    "https://soundcloud.com/02uivhrz6pdr/feel-good",
+    "https://soundcloud.com/bx0ucnqbgn0s/2eetpwwqo2ca",
+    "https://soundcloud.com/sasaundcloud/8d0f3d77-c575-4835-b620-7c4611f53a09"
 ];
 
 // ===========================
