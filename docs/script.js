@@ -123,6 +123,25 @@ function setupControls() {
     const playPauseBtn = document.getElementById('play-pause');
     const nextBtn = document.getElementById('next');
 
+    // 🔥 루프 버튼 추가
+    if (!document.getElementById('loop-button')) {
+        const loopBtn = document.createElement('button');
+        loopBtn.id = "loop-button";
+        loopBtn.innerText = "⟳";
+        document.getElementById('controls').appendChild(loopBtn);
+
+        loopBtn.addEventListener('click', () => {
+            loopMode = !loopMode;
+            loopBtn.classList.toggle('active', loopMode);
+
+            if (loopMode) {
+                showLoopUI();
+            } else {
+                hideLoopUI();
+            }
+        });
+    }
+
     let isPlaying = true;
 
     prevBtn.addEventListener('click', () => {
@@ -149,6 +168,48 @@ function setupControls() {
         }
         isPlaying = !isPlaying;
     });
+}
+
+function showLoopUI() {
+    const container = document.getElementById('container');
+
+    let loopLine = document.createElement('div');
+    loopLine.id = 'loop-line';
+    loopLine.style.height = `${container.offsetHeight}px`;
+    document.body.appendChild(loopLine);
+
+    // 위 점
+    let topDot = document.createElement('div');
+    topDot.className = 'loop-dot';
+    topDot.style.top = `${100}px`;
+    loopLine.appendChild(topDot);
+
+    // 아래 점
+    let bottomDot = document.createElement('div');
+    bottomDot.className = 'loop-dot';
+    bottomDot.style.bottom = `${100}px`;
+    loopLine.appendChild(bottomDot);
+
+    // 중간 사각형들
+    document.querySelectorAll('.textbox').forEach((box, index) => {
+        let rect = box.getBoundingClientRect();
+        let boxDiv = document.createElement('div');
+        boxDiv.className = 'loop-box';
+        boxDiv.style.top = `${rect.top + window.scrollY + box.offsetHeight / 2 - 7}px`;
+        boxDiv.dataset.index = index;
+        boxDiv.addEventListener('click', () => {
+            boxDiv.classList.toggle('inactive');
+            loopActive[index] = !loopActive[index];
+        });
+        loopLine.appendChild(boxDiv);
+    });
+
+    loopLine.style.display = 'block';
+}
+
+function hideLoopUI() {
+    const loopLine = document.getElementById('loop-line');
+    if (loopLine) loopLine.remove();
 }
 
 document.getElementById('close-button').addEventListener('click', function() {
