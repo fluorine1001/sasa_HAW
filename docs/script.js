@@ -1,5 +1,7 @@
 let targetSpeed = 0;
 let currentSpeed = 0;
+let currentPlayingIndex = 0;
+
 const maxSpeed = 5;
 const acceleration = 0.2;
 const margin = 100;
@@ -290,6 +292,54 @@ document.getElementById('close-button').addEventListener('click', function() {
 
     if (timeUpdater) clearInterval(timeUpdater);
 });
+
+// widget 이벤트 핸들러 연결
+widget.bind(SC.Widget.Events.FINISH, () => {
+    if (loopMode) {
+        playNextInLoop();
+    }
+});
+
+function playNextInLoop() {
+    let nextIndex = currentPlayingIndex + 1;
+
+    // loopEnd를 넘어가면 다시 loopStart로
+    if (nextIndex > loopEnd) {
+        nextIndex = loopStart;
+    }
+
+    // 활성화된 곡 찾기
+    while (nextIndex <= loopEnd && !loopActive[nextIndex]) {
+        nextIndex++;
+        if (nextIndex > loopEnd) {
+            nextIndex = loopStart;
+        }
+    }
+
+    // 마지막까지 비활성화일 경우 루프 중단
+    if (!loopActive[nextIndex]) {
+        console.warn('루프 구간에 활성화된 곡이 없습니다.');
+        return;
+    }
+
+    playTrack(nextIndex);
+}
+
+function playTrack(index) {
+    if (index < 0 || index >= links.length) return;
+
+    currentPlayingIndex = index; // 현재 재생 인덱스 업데이트
+
+    const trackUrl = links[index];
+    const embedUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(trackUrl)}&color=%23ff5500&inverse=false&auto_play=true&show_user=true`;
+
+    const playerContainer = document.getElementById('player');
+    const iframeElement = document.getElementById('sc-widget');
+
+    if (iframeElement) {
+        iframeElement.src = embedUrl;
+    }
+}
 
 window.addEventListener('load', () => {
     const boxHeight = 300 + 40 * 2 + 70;
