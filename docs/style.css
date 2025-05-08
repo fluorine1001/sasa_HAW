@@ -7,13 +7,13 @@ body {
 }
 
 #container {
-    padding-top: 100px;  /* 위 여백 */
-    padding-bottom: 100px; /* 🔥 추가: 아래 여백 */
-    padding-left: 200px;
+    padding-top: 100px;
+    padding-bottom: 200px;
+    padding-left: 100px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 70px;
+    gap: 100px;
 }
 
 .textbox {
@@ -30,4 +30,9 @@ body {
 
 .textbox:hover {
     background-color: #e0e0e0;
+}
+
+#player {
+    margin: 50px auto;
+    width: 80%;
 }
