@@ -5,21 +5,21 @@ const acceleration = 0.2;
 const margin = 100;
 
 const links = [
-    "https://soundcloud.com/username/track1",
-    "https://soundcloud.com/username/track2",
-    "https://soundcloud.com/username/track3",
-    "https://soundcloud.com/username/track4",
-    "https://soundcloud.com/username/track5",
-    "https://soundcloud.com/username/track6"
+    "https://soundcloud.com/41354rnjoawm/spark",
+    "https://soundcloud.com/kk9gba3rypuc/card-clash",
+    "https://soundcloud.com/vvkthll1ulvk/agp97mvrniud",
+    "https://soundcloud.com/02uivhrz6pdr/feel-good",
+    "https://soundcloud.com/bx0ucnqbgn0s/2eetpwwqo2ca",
+    "https://soundcloud.com/sasaundcloud/8d0f3d77-c575-4835-b620-7c4611f53a09"
 ];
 
 const titles = [
-    "트랙 1 제목",
-    "트랙 2 제목",
-    "트랙 3 제목",
-    "트랙 4 제목",
-    "트랙 5 제목",
-    "트랙 6 제목"
+    "Spark | 홍준표",
+    "Card Clash | 이지민",
+    "음악 자료 | 이서우",
+    "Feel Good | 조용준",
+    "밤과 방 안의 우리들 | 이정윤",
+    "자정 | 고은규"
 ];
 
 let widget = null;
