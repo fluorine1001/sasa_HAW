@@ -180,15 +180,21 @@ function showLoopUI() {
 
     // 위 점
     let topDot = document.createElement('div');
+    topDot.id = 'top-dot';
     topDot.className = 'loop-dot';
-    topDot.style.top = `${100}px`;
     loopLine.appendChild(topDot);
 
     // 아래 점
     let bottomDot = document.createElement('div');
+    bottomDot.id = 'bottom-dot';
     bottomDot.className = 'loop-dot';
-    bottomDot.style.bottom = `${100}px`;
     loopLine.appendChild(bottomDot);
+
+    positionDots(); // 최초 점 위치 초기화
+
+    // 점 드래그 이벤트 연결
+    setupDotDragging('top-dot');
+    setupDotDragging('bottom-dot');
 
     // 중간 사각형들
     document.querySelectorAll('.textbox').forEach((box, index) => {
@@ -205,6 +211,68 @@ function showLoopUI() {
     });
 
     loopLine.style.display = 'block';
+}
+
+function positionDots() {
+    const boxes = document.querySelectorAll('.textbox');
+    if (boxes.length === 0) return;
+
+    const firstBox = boxes[loopStart];
+    const lastBox = boxes[loopEnd];
+
+    const topDot = document.getElementById('top-dot');
+    const bottomDot = document.getElementById('bottom-dot');
+
+    const rect1 = firstBox.getBoundingClientRect();
+    const rect2 = lastBox.getBoundingClientRect();
+
+    topDot.style.top = `${rect1.top + window.scrollY + firstBox.offsetHeight / 2 - 5}px`;
+    bottomDot.style.top = `${rect2.top + window.scrollY + lastBox.offsetHeight / 2 - 5}px`;
+}
+
+function setupDotDragging(dotId) {
+    const dot = document.getElementById(dotId);
+    const boxes = document.querySelectorAll('.textbox');
+    const container = document.getElementById('container');
+
+    dot.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+
+        const moveHandler = (eMove) => {
+            let closestIndex = 0;
+            let minDist = Infinity;
+
+            boxes.forEach((box, index) => {
+                const rect = box.getBoundingClientRect();
+                const centerY = rect.top + window.scrollY + box.offsetHeight / 2;
+                const dist = Math.abs(centerY - eMove.clientY - window.scrollY);
+                if (dist < minDist) {
+                    minDist = dist;
+                    closestIndex = index;
+                }
+            });
+
+            if (dotId === 'top-dot') {
+                if (closestIndex <= loopEnd) {
+                    loopStart = closestIndex;
+                }
+            } else if (dotId === 'bottom-dot') {
+                if (closestIndex >= loopStart) {
+                    loopEnd = closestIndex;
+                }
+            }
+
+            positionDots(); // 점 위치 갱신
+        };
+
+        const upHandler = () => {
+            window.removeEventListener('mousemove', moveHandler);
+            window.removeEventListener('mouseup', upHandler);
+        };
+
+        window.addEventListener('mousemove', moveHandler);
+        window.addEventListener('mouseup', upHandler);
+    });
 }
 
 function hideLoopUI() {
