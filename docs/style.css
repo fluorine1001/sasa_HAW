@@ -32,7 +32,13 @@ body {
     background-color: #e0e0e0;
 }
 
+/* 🔥 고정된 SoundCloud 플레이어 스타일 */
 #player {
-    margin: 50px auto;
-    width: 80%;
+    position: fixed;
+    top: 100px;
+    right: 100px;
+    width: 200px;
+    height: 200px;
+    z-index: 9999;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
