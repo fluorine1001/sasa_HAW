@@ -8,10 +8,11 @@ body {
 
 #container {
     padding-top: 100px;  /* 위 여백 */
-    padding-bottom: 200px; /* 🔥 추가: 아래 여백 */
+    padding-bottom: 100px; /* 🔥 추가: 아래 여백 */
+    padding-left: 200px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 100px;
 }
 
