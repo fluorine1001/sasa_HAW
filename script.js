@@ -1,8 +1,11 @@
 let targetSpeed = 0;
 let currentSpeed = 0;
-const maxSpeed = 10;
+const maxSpeed = 5;
 const acceleration = 0.2;
-const margin = 100; // 컨테이너 패딩과 동일한 값
+const margin = 100;
+
+// information 파일에서 읽어온 줄들
+let lines = [];
 
 document.addEventListener('mousemove', function(e) {
     let y = e.clientY;
@@ -42,19 +45,32 @@ function scrollPage() {
 }
 requestAnimationFrame(scrollPage);
 
-// 텍스트 박스 클릭 시 오디오 재생
-document.querySelectorAll('.textbox').forEach(box => {
+// 🔥 information.txt 파일 읽어오기
+fetch('information.txt')
+    .then(response => response.text())
+    .then(text => {
+        lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+    })
+    .catch(error => {
+        console.error('information 파일 로딩 실패:', error);
+    });
+
+// 🔥 텍스트 박스 클릭하면 해당 줄의 mp3 파일 재생
+document.querySelectorAll('.textbox').forEach((box, index) => {
     box.addEventListener('click', function() {
-        let audioFile = this.getAttribute('data-audio');
-        let audio = new Audio(audioFile);
-        audio.play();
+        if (index < lines.length) {
+            let filename = lines[index]; // x번째 줄 가져오기
+            let audio = new Audio(filename + '.mp3'); // 예: "hello.mp3"
+            audio.play();
+        } else {
+            console.error('lines에 해당 인덱스가 없습니다.');
+        }
     });
 });
 
-// 🔥 최초 로딩 시 스크롤 위치 조정
+// 🔥 초기 스크롤 조정
 window.addEventListener('load', () => {
-    const boxHeight = 300 + 40 * 2 + 100; // (텍스트박스 높이 + 패딩*2 + gap)
-    const initialScroll = boxHeight * 1.5; 
-    // 1.5개 정도 스크롤 => 2~5번 상자 중심으로 보이게
+    const boxHeight = 300 + 40 * 2 + 100;
+    const initialScroll = boxHeight * 1.5;
     window.scrollTo(0, initialScroll);
 });
