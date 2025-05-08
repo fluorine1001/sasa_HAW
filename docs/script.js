@@ -20,23 +20,14 @@ const links = [
 ];
 
 // ===========================
-// SoundCloud client_id
-// (미리 얻은 client_id 입력)
-const clientId = "cclLlwXxVF8m2AFHEEibPwBnLTESYcgj"; // ⭐ 여기에 입력
-
-// ===========================
-// SoundCloud 트랙에서 아트워크 가져오는 함수
+// SoundCloud oEmbed API를 통한 아트워크 가져오기
 // ===========================
 async function getArtwork(trackUrl) {
-    const resolveUrl = `https://api.soundcloud.com/resolve?url=${encodeURIComponent(trackUrl)}&client_id=${clientId}`;
+    const oembedUrl = `https://soundcloud.com/oembed?format=json&url=${encodeURIComponent(trackUrl)}`;
     try {
-        const response = await fetch(resolveUrl);
-        const trackData = await response.json();
-        if (trackData.artwork_url) {
-            return trackData.artwork_url.replace("-large", "-t500x500");
-        } else {
-            return "https://via.placeholder.com/200?text=No+Artwork";
-        }
+        const response = await fetch(oembedUrl);
+        const data = await response.json();
+        return data.thumbnail_url; // 아트워크 URL 리턴
     } catch (error) {
         console.error("Artwork 로딩 실패:", error);
         return "https://via.placeholder.com/200?text=Error";
@@ -88,7 +79,7 @@ function scrollPage() {
 requestAnimationFrame(scrollPage);
 
 // ===========================
-// 텍스트 박스 클릭 시 SoundCloud 임베드 + 아트워크 띄우기
+// 텍스트 박스 클릭 시 아트워크 + 매우 작은 임베드 띄우기
 // ===========================
 document.querySelectorAll('.textbox').forEach((box, index) => {
     box.addEventListener('click', async function() {
