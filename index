@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>텍스트 박스 오디오 재생</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container">
+        <div class="textbox" data-audio="audio1.wav">텍스트 1</div>
+        <div class="textbox" data-audio="audio2.wav">텍스트 2</div>
+        <div class="textbox" data-audio="audio3.wav">텍스트 3</div>
+        <div class="textbox" data-audio="audio4.wav">텍스트 4</div>
+        <div class="textbox" data-audio="audio5.wav">텍스트 5</div>
+        <div class="textbox" data-audio="audio6.wav">텍스트 6</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
