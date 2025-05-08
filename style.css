@@ -7,11 +7,12 @@ body {
 }
 
 #container {
-    padding-top: 100px; /* margin만큼 위에 여백 추가 (스크롤 영역 안에 포함) */
+    padding-top: 100px;  /* 위 여백 */
+    padding-bottom: 200px; /* 🔥 추가: 아래 여백 */
     display: flex;
     flex-direction: column;
-    align-items: center; /* 가운데 정렬 */
-    gap: 100px; /* 상자 간 간격 */
+    align-items: center;
+    gap: 100px;
 }
 
 .textbox {
