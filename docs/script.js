@@ -20,6 +20,18 @@ const links = [
 ];
 
 // ===========================
+// 각 트랙에 대응하는 설명 텍스트 배열
+// ===========================
+const titles = [
+    "트랙 1 제목",
+    "트랙 2 제목",
+    "트랙 3 제목",
+    "트랙 4 제목",
+    "트랙 5 제목",
+    "트랙 6 제목"
+];
+
+// ===========================
 // SoundCloud oEmbed API를 통한 아트워크 가져오기
 // ===========================
 async function getArtwork(trackUrl) {
@@ -27,7 +39,7 @@ async function getArtwork(trackUrl) {
     try {
         const response = await fetch(oembedUrl);
         const data = await response.json();
-        return data.thumbnail_url; // 아트워크 URL 리턴
+        return data.thumbnail_url; // 아트워크 URL 반환
     } catch (error) {
         console.error("Artwork 로딩 실패:", error);
         return "https://via.placeholder.com/200?text=Error";
@@ -79,19 +91,21 @@ function scrollPage() {
 requestAnimationFrame(scrollPage);
 
 // ===========================
-// 텍스트 박스 클릭 시 아트워크 + 매우 작은 임베드 띄우기
+// 텍스트 박스 클릭 시 아트워크 + 설명 + 임베드 표시
 // ===========================
 document.querySelectorAll('.textbox').forEach((box, index) => {
     box.addEventListener('click', async function() {
         if (index < links.length) {
             const trackUrl = links[index];
             const artworkUrl = await getArtwork(trackUrl);
+            const title = titles[index];
 
             const embedUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(trackUrl)}&color=%23ff5500&inverse=false&auto_play=true&show_user=true`;
 
             const playerContainer = document.getElementById('player');
             playerContainer.innerHTML = `
                 <img src="${artworkUrl}" alt="Artwork">
+                <div class="track-title">${title}</div>
                 <iframe scrolling="no" frameborder="no" allow="autoplay"
                 src="${embedUrl}"></iframe>
             `;
