@@ -32,7 +32,6 @@ body {
     background-color: #e0e0e0;
 }
 
-/* 전체 player fade 영역 */
 #player {
     position: fixed;
     top: 50%;
@@ -50,7 +49,6 @@ body {
     opacity: 1;
 }
 
-/* 아트워크 */
 #artwork-container {
     width: 400px;
     height: 400px;
@@ -70,7 +68,6 @@ body {
     border-radius: 12px;
 }
 
-/* 트랙 제목 */
 .track-title {
     margin-top: 40px;
     text-align: center;
@@ -79,7 +76,6 @@ body {
     color: #333;
 }
 
-/* 재생 시간 표시 */
 .track-time {
     margin-top: 10px;
     text-align: center;
@@ -87,7 +83,6 @@ body {
     color: #666;
 }
 
-/* 제어 버튼 영역 */
 #controls {
     margin-top: 15px;
     display: flex;
@@ -109,7 +104,6 @@ body {
     transform: scale(1.2);
 }
 
-/* iframe 숨기기 */
 #player iframe {
     position: absolute;
     top: 0;
@@ -119,7 +113,6 @@ body {
     opacity: 0;
 }
 
-/* 닫기 버튼 */
 #close-button {
     position: fixed;
     top: 20px;
